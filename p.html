@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function change_content() {
+        var all_p = document.getElementsByClassName("abc");
+
+        console.log(all_p);
+        all_p[1].style.color = "red";
+      }
+
+      function highlight() {
+        ele_h1 = document.getElementById("a1").style;
+        ele_h1.color = "red";
+        ele_h1.backgroundColor = "Green";
+        ele_h1.fontSize = "30px";
+      }
+      function reset() {
+        ele_h1 = document.getElementById("a1").style;
+        ele_h1.color = "black";
+        ele_h1.backgroundColor = "white";
+        ele_h1.fontSize = "16px";
+      }
+    </script>
+  </head>
+  <body>
+    <p class="abc">1</p>
+    <h1 class="abc">2</h1>
+    <p class="abc">3</p>
+    <h1 class="abc">4</h1>
+    <p class="abc" id="a1" onmouseenter="highlight()" onmouseleave="reset()">
+      5
+    </p>
+    <input type="button" value="Change text" onclick="change_content()" />
+  </body>
+</html>

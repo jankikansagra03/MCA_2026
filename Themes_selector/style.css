@@ -1,0 +1,76 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --text-main: #000000;
+  --text-accent: #555555;
+}
+
+[data-theme="dark"] {
+  --bg-color: #d3cccc;
+  --text-color: #ffffff;
+  --text-main: #ffffff;
+  --text-accent: #080808;
+  --btn-bg-color: #080808;
+  --btn-text-color: #ffffff;
+}
+
+[data-theme="teal"] {
+  --bg-color: #c1dee0;
+  --text-color: #ffffff;
+  --text-main: #ffffff;
+  --text-accent: #cccccc;
+  --btn-bg-color: teal;
+  --btn-text-color: #ffffff;
+}
+[data-theme="night-sky"] {
+  --bg-color: #b0c1c4;
+  --text-color: #ffffff;
+  --text-main: #0b1471;
+  --text-accent: #cccccc;
+  --btn-bg-color: #0b1471;
+  --btn-text-color: #ffffff;
+}
+[data-theme="olive-green"] {
+  --bg-color: rgb(218, 218, 183);
+  --text-color: #ffffff;
+  --text-main: #333131;
+  --text-accent: #060404;
+  --btn-bg-color: olive;
+  --btn-text-color: #ffffff;
+}
+
+[data-theme="sunset"] {
+  --bg-color: #efd2c7;
+  --text-color: #ffffff;
+  --text-main: #ffffff;
+  --text-accent: #060404;
+  --btn-bg-color: #ff4500;
+  --btn-text-color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: sans-serif;
+  transition:
+    background-color 0.3s,
+    color 0.3s; /* Smooth transition effect */
+}
+
+h1 {
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-accent);
+}
+
+.btn {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s; /* Smooth transition effect */
+}

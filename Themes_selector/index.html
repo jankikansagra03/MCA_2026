@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <form action="">
+      Select theme:
+      <select name="theme" id="theme" onchange="changeTheme(this.value)">
+        <option value="sunset">Sunlight</option>
+        <option value="teal">Teal</option>
+        <option value="night-sky">Night sky</option>
+        <option value="olive-green">olive green</option>
+      </select>
+
+      <input type="button" value="Apply" class="btn" onclick="applyTheme()" />
+    </form>
+    <h1 id="h">Main theme selector</h1>
+    <p>Child element of main theme selector</p>
+  </body>
+</html>

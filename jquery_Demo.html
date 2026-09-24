@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+      .demo {
+        color: green;
+        background-color: aqua;
+        border: 2px solid red;
+      }
+    </style>
+
+    <script>
+      $(document).ready(function () {
+        $("p").click(function () {
+          $("p").css({ color: "red", "background-color": "yellow" });
+          $("p").text("heelo new content");
+          $("p").hide();
+        });
+
+        $("#btn").click(function () {
+          $("p").toggleClass("demo");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <p>hello</p>
+    <h1 id="h">Hello h1</h1>
+    <input type="button" id="btn" value="Toggle paragraph" />
+  </body>
+</html>
