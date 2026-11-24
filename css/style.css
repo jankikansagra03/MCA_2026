@@ -1,0 +1,1681 @@
+/*
+ * style.css - store-specific styles on top of Bootstrap.
+ * One brand colour is used everywhere; white and grey are neutral helpers
+ * that keep text readable. Bootstrap's colour names are pointed at the
+ * same brand colour so the beginner-friendly HTML classes can stay simple.
+ */
+
+:root {
+    /* The single TrendCart colour: a calm, easy-on-the-eye teal. */
+    --tc-brand: #0f766e;
+    --tc-brand-rgb: 15, 118, 110;
+    --tc-brand-dark: #0b5750;
+    --tc-brand-light: #157f74;
+    --tc-brand-pale: #d7f1ed;
+    --tc-brand-deep: #084f49;
+    /* One shared dark-to-light gradient for every solid brand surface. */
+    --tc-brand-gradient: linear-gradient(120deg, var(--tc-brand-dark), var(--tc-brand-light));
+    --tc-border: #e4ebe8;
+    --tc-text: #263532;
+
+    /* Every Bootstrap colour name maps to that one colour. */
+    --bs-blue: var(--tc-brand);
+    --bs-indigo: var(--tc-brand);
+    --bs-purple: var(--tc-brand);
+    --bs-pink: var(--tc-brand);
+    --bs-red: var(--tc-brand);
+    --bs-orange: var(--tc-brand);
+    --bs-yellow: var(--tc-brand);
+    --bs-green: var(--tc-brand);
+    --bs-teal: var(--tc-brand);
+    --bs-cyan: var(--tc-brand);
+    --bs-primary: var(--tc-brand);
+    --bs-secondary: var(--tc-brand);
+    --bs-success: var(--tc-brand);
+    --bs-info: var(--tc-brand);
+    --bs-warning: var(--tc-brand);
+    --bs-danger: var(--tc-brand);
+    --bs-primary-rgb: var(--tc-brand-rgb);
+    --bs-secondary-rgb: var(--tc-brand-rgb);
+    --bs-success-rgb: var(--tc-brand-rgb);
+    --bs-info-rgb: var(--tc-brand-rgb);
+    --bs-warning-rgb: var(--tc-brand-rgb);
+    --bs-danger-rgb: var(--tc-brand-rgb);
+
+    /* Subtle backgrounds and emphasis colours also stay in the same hue. */
+    --bs-primary-bg-subtle: var(--tc-brand-pale);
+    --bs-primary-border-subtle: #a9dcd4;
+    --bs-primary-text-emphasis: var(--tc-brand-deep);
+    --bs-secondary-bg-subtle: var(--tc-brand-pale);
+    --bs-secondary-border-subtle: #a9dcd4;
+    --bs-secondary-text-emphasis: var(--tc-brand-deep);
+    --bs-success-bg-subtle: var(--tc-brand-pale);
+    --bs-success-border-subtle: #a9dcd4;
+    --bs-success-text-emphasis: var(--tc-brand-deep);
+    --bs-info-bg-subtle: var(--tc-brand-pale);
+    --bs-info-border-subtle: #a9dcd4;
+    --bs-info-text-emphasis: var(--tc-brand-deep);
+    --bs-warning-bg-subtle: var(--tc-brand-pale);
+    --bs-warning-border-subtle: #a9dcd4;
+    --bs-warning-text-emphasis: var(--tc-brand-deep);
+    --bs-danger-bg-subtle: var(--tc-brand-pale);
+    --bs-danger-border-subtle: #a9dcd4;
+    --bs-danger-text-emphasis: var(--tc-brand-deep);
+
+    /* Links, focus rings, pagination and code stay in the same hue too. */
+    --bs-link-color: var(--tc-brand);
+    --bs-link-color-rgb: var(--tc-brand-rgb);
+    --bs-link-hover-color: var(--tc-brand-dark);
+    --bs-link-hover-color-rgb: 11, 87, 80;
+    --bs-focus-ring-color: rgba(var(--tc-brand-rgb), 0.25);
+    --bs-pagination-active-bg: var(--tc-brand);
+    --bs-pagination-active-border-color: var(--tc-brand);
+    --bs-pagination-hover-bg: var(--tc-brand-pale);
+    --bs-pagination-hover-border-color: var(--tc-brand);
+    --bs-pagination-focus-color: var(--tc-brand);
+    --bs-pagination-focus-bg: var(--tc-brand-pale);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(var(--tc-brand-rgb), 0.25);
+    --bs-code-color: var(--tc-brand);
+    --bs-highlight-bg: var(--tc-brand-pale);
+    --bs-dropdown-link-active-bg: var(--tc-brand);
+}
+
+/* Bootstrap hard-codes its default blue for checked checkboxes and radios. */
+.form-check-input:checked {
+    background-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+    border-color: var(--tc-brand);
+}
+
+.page-item.active .page-link {
+    background-color: var(--tc-brand);
+    border-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: var(--tc-brand);
+}
+
+.dropdown-item.active {
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Solid buttons all share the brand colour. */
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tc-brand);
+    --bs-btn-border-color: var(--tc-brand);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tc-brand-dark);
+    --bs-btn-hover-border-color: var(--tc-brand-dark);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tc-brand-dark);
+    --bs-btn-active-border-color: var(--tc-brand-dark);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--tc-brand);
+    --bs-btn-disabled-border-color: var(--tc-brand);
+    --bs-btn-focus-shadow-rgb: var(--tc-brand-rgb);
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Outlined buttons use the same colour as text, border and hover fill. */
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-info,
+.btn-outline-warning,
+.btn-outline-danger {
+    --bs-btn-color: var(--tc-brand);
+    --bs-btn-border-color: var(--tc-brand);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tc-brand);
+    --bs-btn-hover-border-color: var(--tc-brand);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tc-brand-dark);
+    --bs-btn-active-border-color: var(--tc-brand-dark);
+    --bs-btn-focus-shadow-rgb: var(--tc-brand-rgb);
+}
+
+/* A brand-coloured fill on hover/active also picks up the same gradient. */
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-success:hover,
+.btn-outline-info:hover,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover,
+.btn-outline-primary:active,
+.btn-outline-secondary:active,
+.btn-outline-success:active,
+.btn-outline-info:active,
+.btn-outline-warning:active,
+.btn-outline-danger:active {
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Bootstrap normally gives warning badges dark text; use white on our brand. */
+.text-bg-warning {
+    color: #fff !important;
+}
+
+/* Every solid brand badge, strip and active state uses the same gradient. */
+.text-bg-primary,
+.text-bg-secondary,
+.text-bg-success,
+.text-bg-info,
+.text-bg-warning,
+.text-bg-danger,
+.bg-primary,
+.bg-secondary,
+.bg-success,
+.bg-info,
+.bg-warning,
+.bg-danger {
+    background-image: var(--tc-brand-gradient);
+}
+
+/* The navbar is fixed, so every page leaves room for it at the top. */
+body {
+    padding-top: 70px;
+    background: #f5f8f7;
+    color: var(--tc-text);
+}
+
+/* Announcement bar above the fixed navbar. */
+.topbar {
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    background: var(--tc-brand-gradient);
+}
+
+/* A light tint of the brand colour for text on dark brand panels. */
+.on-dark-accent {
+    color: #a9dcd4 !important;
+}
+
+/* Thin brand-coloured edge under the fixed navbar. */
+.site-navbar {
+    border-bottom: 3px solid var(--tc-brand);
+}
+
+/* Navigation and menu icons follow the brand colour as well. */
+.site-navbar .navbar-brand i,
+.site-navbar .nav-link i,
+.dropdown-item i {
+    color: var(--tc-brand);
+}
+
+.site-navbar .navbar-nav .nav-link.active {
+    color: var(--tc-brand);
+}
+
+/* The footer uses the same gradient as the hero and announcement bar. */
+.site-footer {
+    background: var(--tc-brand-gradient);
+}
+
+/* Home page hero banner. */
+.hero-bg {
+    background: var(--tc-brand-gradient);
+}
+
+/* Soft light shapes give the gradient some depth without new colours. */
+.hero-showcase {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-showcase::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.16), transparent 38%),
+        radial-gradient(circle at 8% 92%, rgba(255, 255, 255, 0.1), transparent 32%);
+    pointer-events: none;
+}
+
+.hero-showcase > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Dashed coupon chip under the hero buttons. */
+.hero-coupon {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px dashed rgba(255, 255, 255, 0.55);
+}
+
+/* Stage that holds the featured card and the smaller floating cards. */
+.hero-stage {
+    min-height: 430px;
+}
+
+.hero-feature {
+    max-width: 350px;
+    margin-left: auto;
+    transform: rotate(-2deg);
+}
+
+.hero-feature .product-img {
+    height: 150px;
+    font-size: 3.5rem;
+}
+
+/* Small non-product note that floats beside the featured card. */
+.hero-delivery-chip {
+    position: absolute;
+    bottom: -35px;
+    left: -35px;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 0.7rem;
+    transform: rotate(-3deg);
+}
+
+.hero-delivery-chip .chip-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 50%;
+    background: var(--tc-brand-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Circular sale stamp floating over the product composition. */
+.hero-sale-stamp {
+    position: absolute;
+    top: -35px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: var(--tc-brand-gradient);
+    font-size: 0.7rem;
+    line-height: 1.1;
+    text-align: center;
+    transform: rotate(8deg);
+}
+
+/* Promo banner used on the home page. */
+.promo-bg {
+    background: var(--tc-brand-gradient);
+}
+
+/* Coloured area where a product image would appear (icons are used instead). */
+.product-img {
+    height: 190px;
+    font-size: 4rem;
+    /* Bootstrap's bg-light / bg-white helpers use !important, so we do too. */
+    background: var(--tc-brand-pale) !important;
+}
+
+/* Larger version used on the single-product page. */
+.product-detail-img {
+    height: 320px;
+    font-size: 7rem;
+}
+
+/* Image gallery on the product detail page. */
+.product-gallery .carousel-item .product-img {
+    border-radius: 0.75rem;
+}
+
+/* Keep the discount badge and action icons above the gallery. */
+.gallery-floating {
+    z-index: 2;
+}
+
+/* Thumbnails are Bootstrap carousel indicators, styled as small image tiles. */
+.carousel-indicators.gallery-indicators {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+}
+
+.carousel-indicators.gallery-indicators button {
+    width: 52px;
+    height: 52px;
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+    border: 1px solid var(--tc-border);
+    border-radius: 0.5rem;
+    background: #fff;
+    opacity: 1;
+    color: var(--tc-brand);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.carousel-indicators.gallery-indicators button:hover {
+    border-color: var(--tc-brand);
+    background: var(--tc-brand-pale);
+}
+
+.carousel-indicators.gallery-indicators button.active {
+    border-color: var(--tc-brand);
+    background: var(--tc-brand-pale);
+    box-shadow: 0 0 0 2px rgba(var(--tc-brand-rgb), 0.15);
+}
+
+/* Category tiles lift slightly on hover. */
+.category-tile {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.category-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(var(--tc-brand-rgb), 0.18);
+}
+
+/* Initial circles for the "Our Team" section. */
+.avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+/* Stars and old prices. */
+.rating-stars {
+    color: var(--tc-brand);
+    letter-spacing: 1px;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #8c8c8c;
+}
+
+/* Payment icons in the footer. */
+.pay-icon {
+    font-size: 1.7rem;
+    margin-right: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Footer links. */
+.footer-links a {
+    color: rgba(255, 255, 255, 0.68);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Small supporting text. */
+.hint {
+    font-size: 0.85rem;
+}
+
+/* Narrow centered intro paragraphs. */
+.text-narrow {
+    max-width: 650px;
+}
+
+/* Smaller initials used in testimonials. */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+/* Sort control in the shop listing. */
+.sort-select {
+    width: auto;
+}
+
+/* Keep the sign-in / register forms compact and focused. */
+.auth-card {
+    max-width: 420px;
+}
+
+/* Four-pixel colour bar across the top of the auth cards. */
+.auth-strip {
+    height: 4px;
+}
+
+/* The register form uses two columns, so it needs a little more room. */
+.register-card {
+    max-width: 720px;
+}
+
+/* Breadcrumbs line up with the auth card above them. */
+.auth-breadcrumb {
+    max-width: 420px;
+}
+
+.register-breadcrumb {
+    max-width: 720px;
+}
+
+/* Split sign-in card: brand panel on one side, form on the other. */
+.auth-split {
+    max-width: 820px;
+    overflow: hidden;
+}
+
+.login-breadcrumb {
+    max-width: 820px;
+}
+
+.auth-panel {
+    background: var(--tc-brand-gradient);
+}
+
+.auth-panel a {
+    color: #fff;
+}
+
+/* One shared card look used on every page. */
+.store-card {
+    background: #fff;
+    border: 1px solid var(--tc-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(var(--tc-brand-rgb), 0.07);
+}
+
+/* The same heading block at the top of every content page. */
+.page-header {
+    max-width: 650px;
+    margin: 0 auto 2.5rem;
+    text-align: center;
+}
+
+.page-header h1,
+.page-header h2,
+.store-card h2,
+.store-card h3 {
+    color: var(--tc-brand-deep);
+}
+
+/* The dark sign-in panel keeps white text despite the shared heading colour. */
+.auth-panel h2 {
+    color: #fff;
+}
+
+.page-header .badge {
+    background: var(--tc-brand-gradient);
+}
+
+/* Small percentage badge on product tiles. */
+.discount-badge {
+    font-size: 0.65rem;
+    padding: 0.25em 0.4em;
+    border-radius: 0.35rem;
+}
+
+/* Circular icon buttons for view, wishlist and cart on product tiles. */
+.product-icon-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Keep the search box from squeezing the navigation on medium screens. */
+@media (min-width: 992px) {
+    .navbar-search {
+        width: 175px;
+    }
+}
+
+/* The mobile navbar is a little shorter than the desktop one. */
+@media (max-width: 991.98px) {
+    body {
+        padding-top: 62px;
+    }
+}
+
+/* ---------- Account area ---------- */
+
+/* Gradient panel across the top of the dashboard. */
+.account-hero {
+    background: var(--tc-brand-gradient);
+    color: #fff;
+}
+
+.account-hero h2 {
+    color: #fff;
+}
+
+.account-hero a {
+    color: #fff;
+}
+
+/* Small statistic cards on the dashboard. */
+.account-stat {
+    border-left: 3px solid var(--tc-brand);
+}
+
+.account-stat .stat-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 0.6rem;
+    background: var(--tc-brand-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sidebar shared by all account pages. */
+.account-nav .nav-link {
+    color: var(--tc-text);
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.account-nav .nav-link i {
+    color: var(--tc-brand);
+    width: 1.25rem;
+}
+
+.account-nav .nav-link:hover {
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand-deep);
+}
+
+.account-nav .nav-link.active {
+    color: #fff;
+    background-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+}
+
+.account-nav .nav-link.active i {
+    color: #fff;
+}
+
+/* Order status filter tabs. */
+.account-tabs .nav-link.active {
+    background-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Small product thumbs reused in orders, cart and checkout. */
+.order-thumb {
+    width: 64px;
+    height: 64px;
+    flex: 0 0 64px;
+    font-size: 1.6rem;
+}
+
+/* Static quantity control in the cart. */
+.qty-stepper .btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+.qty-stepper .form-control {
+    width: 46px;
+    text-align: center;
+}
+
+/* Price summary rows in cart and checkout. */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.summary-total {
+    border-top: 1px solid var(--tc-border);
+    padding-top: 0.75rem;
+    font-size: 1.15rem;
+}
+
+/* Pale icon squares used in the cart and wishlist info strips. */
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 0.6rem;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+/* Bootstrap modals use the same borders and heading colour as the cards. */
+.modal-content,
+.modal-header,
+.modal-footer {
+    border-color: var(--tc-border);
+}
+
+.modal-title {
+    color: var(--tc-brand-deep);
+}
+
+/* Cart rows are separated by lines rather than separate cards. */
+.cart-item {
+    padding: 1rem 1.25rem;
+}
+
+.cart-item + .cart-item {
+    border-top: 1px solid var(--tc-border);
+}
+
+.cart-item .order-thumb {
+    border: 1px solid var(--tc-border);
+}
+
+/* Small stock label used in cart rows and wishlist tiles. */
+.stock-pill {
+    display: inline-block;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand-deep);
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+}
+
+.cart-trust i {
+    color: var(--tc-brand);
+}
+
+/* The price panel follows the page on wide screens. */
+.cart-summary,
+.checkout-summary {
+    border-top: 3px solid var(--tc-brand);
+}
+
+@media (min-width: 1200px) {
+    .cart-summary,
+    .checkout-summary {
+        position: sticky;
+        top: 90px;
+    }
+}
+
+/* A slightly taller image area makes saved products easier to scan. */
+.wishlist-card .product-img {
+    height: 200px;
+    font-size: 4.25rem;
+}
+
+.saved-date {
+    font-size: 0.72rem;
+    color: #73817d;
+    white-space: nowrap;
+}
+
+/* The default delivery address gets a highlighted edge. */
+.address-card.is-default {
+    border-color: var(--tc-brand);
+    box-shadow: 0 0.35rem 1rem rgba(var(--tc-brand-rgb), 0.14);
+}
+
+.address-default-flag {
+    background: var(--tc-brand-gradient);
+    color: #fff;
+}
+
+/* Large initial circle on the profile page. */
+.profile-avatar {
+    width: 96px;
+    height: 96px;
+    font-size: 2rem;
+}
+
+/* Small pale icon squares used beside account preferences. */
+.pref-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 0.5rem;
+    background: var(--tc-brand-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gradient banner used on the profile and order detail pages. */
+.profile-banner,
+.order-banner {
+    background: var(--tc-brand-gradient);
+    color: #fff;
+}
+
+.profile-banner h2,
+.order-banner h2 {
+    color: #fff;
+}
+
+.profile-banner p,
+.order-banner p {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+/* Small heading block made of a pale icon square and two lines of text. */
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Preference and sign-in rows use the same icon-and-text pattern. */
+.preference-row,
+.pref-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+}
+
+.preference-row + .preference-row,
+.pref-row + .pref-row {
+    border-top: 1px solid var(--tc-border);
+}
+
+/* Static password-strength bars below the new-password field. */
+.strength-meter {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.strength-bar {
+    flex: 1;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--tc-border);
+}
+
+.strength-bar.on {
+    background-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Checklist on the change-password page. */
+.security-list li {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+}
+
+.security-list li + li {
+    border-top: 1px solid var(--tc-border);
+}
+
+/* Signed-in device rows on the change-password page. */
+.device-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+}
+
+.device-row + .device-row {
+    border-top: 1px solid var(--tc-border);
+}
+
+.device-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 0.55rem;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Selected delivery address on the checkout page. */
+.address-choice {
+    border: 1px solid var(--tc-brand) !important;
+    border-radius: 0.5rem;
+}
+
+/* Payment choices on the checkout page. */
+.payment-option {
+    border: 1px solid var(--tc-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+.payment-option .form-check-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.payment-option.is-selected {
+    border-color: var(--tc-brand);
+    background: var(--tc-brand-pale);
+    box-shadow: 0 0.25rem 0.75rem rgba(var(--tc-brand-rgb), 0.1);
+}
+
+/* Compact four-step progress bar used in order lists. */
+.mini-progress {
+    display: flex;
+    gap: 0.25rem;
+    max-width: 160px;
+}
+
+.mini-progress span {
+    flex: 1;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--tc-border);
+}
+
+.mini-progress span.on {
+    background: var(--tc-brand-gradient);
+}
+
+/* Simple order-tracking timeline. */
+.track {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.track-step {
+    flex: 1 1 130px;
+    position: relative;
+    text-align: center;
+    padding: 0 0.25rem;
+}
+
+.track-step::before {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: -50%;
+    width: 100%;
+    height: 2px;
+    background: var(--tc-border);
+    z-index: 0;
+}
+
+.track-step:first-child::before {
+    display: none;
+}
+
+.track-step.done::before {
+    background-image: var(--tc-brand-gradient);
+}
+
+.track-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--tc-brand);
+    color: var(--tc-brand);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.track-step.done .track-dot,
+.track-step.current .track-dot {
+    color: #fff;
+    border-color: var(--tc-brand);
+    background-color: var(--tc-brand);
+    background-image: var(--tc-brand-gradient);
+}
+
+/* Table headings inside account cards. */
+.account-table thead th {
+    color: var(--tc-brand-deep);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Keep the sidebar in view while long account pages scroll. */
+@media (min-width: 992px) {
+    .account-sidebar {
+        position: sticky;
+        top: 90px;
+    }
+}
+
+/* ============================================================
+   ADMIN PANEL — a separate, denser layout with its own sidebar.
+   ============================================================ */
+:root {
+    --tc-admin-bg: #f3f6f5;
+    --tc-admin-side: #0d2f2b;
+    --tc-admin-line: #e3eae7;
+    --tc-admin-text: #263532;
+    --tc-admin-muted: #71817c;
+}
+
+.admin-body {
+    padding-top: 0;
+    background: var(--tc-admin-bg);
+    color: var(--tc-admin-text);
+    font-size: 0.9rem;
+}
+
+.admin-shell {
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 246px;
+    overflow-y: auto;
+    background: var(--tc-admin-side);
+    color: #dbe9e5;
+    padding: 1.1rem 0.9rem;
+    z-index: 1030;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.3rem 0.45rem 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 1rem;
+}
+
+.admin-brand-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 0.55rem;
+    background: var(--tc-brand-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-brand > span:last-child > span {
+    color: #fff;
+}
+
+.admin-brand small {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.admin-nav-heading {
+    margin: 0.85rem 0.7rem 0.35rem;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.admin-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.45rem;
+}
+
+.admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.58rem 0.7rem;
+    border-radius: 0.5rem;
+    color: #c5d9d4;
+    text-decoration: none;
+    font-size: 0.86rem;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+}
+
+.admin-nav-link.active {
+    background: var(--tc-brand-gradient);
+    color: #fff;
+    font-weight: 600;
+}
+
+.admin-nav-link i {
+    width: 1.1rem;
+    text-align: center;
+}
+
+.admin-chevron {
+    margin-left: auto;
+    font-size: 0.65rem;
+}
+
+.admin-nav-bottom {
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 0.8rem;
+}
+
+.admin-main {
+    margin-left: 246px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: #fff;
+    border-bottom: 1px solid var(--tc-admin-line);
+}
+
+.admin-topbar-inner {
+    height: 62px;
+    padding: 0 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.admin-mobile-brand {
+    font-weight: 700;
+    color: var(--tc-brand-deep);
+}
+
+.admin-search {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 320px;
+    padding: 0.42rem 0.7rem;
+    background: var(--tc-admin-bg);
+    border: 1px solid var(--tc-admin-line);
+    border-radius: 0.5rem;
+}
+
+.admin-search i {
+    color: var(--tc-admin-muted);
+}
+
+.admin-search input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 0.85rem;
+}
+
+.admin-top-link {
+    color: var(--tc-brand-deep);
+    text-decoration: none;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+.admin-icon-link {
+    position: relative;
+    color: var(--tc-admin-text);
+    font-size: 1.05rem;
+    text-decoration: none;
+}
+
+.admin-dot {
+    position: absolute;
+    top: -1px;
+    right: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tc-brand);
+    border: 1px solid #fff;
+}
+
+.admin-user-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.admin-user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--tc-brand-gradient);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.admin-user-chip strong,
+.admin-user-chip small {
+    display: block;
+    line-height: 1.2;
+}
+
+.admin-user-chip strong {
+    font-size: 0.82rem;
+}
+
+.admin-user-chip small {
+    color: var(--tc-admin-muted);
+    font-size: 0.7rem;
+}
+
+.admin-content {
+    flex: 1 1 auto;
+}
+
+.admin-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1.4rem;
+    background: #fff;
+    border-top: 1px solid var(--tc-admin-line);
+    color: var(--tc-admin-muted);
+    font-size: 0.75rem;
+}
+
+.admin-card {
+    background: #fff;
+    border: 1px solid var(--tc-admin-line);
+    border-radius: 0.7rem;
+    box-shadow: 0 0.15rem 0.5rem rgba(15, 118, 110, 0.05);
+}
+
+.admin-card .card-body {
+    padding: 1.15rem;
+}
+
+.admin-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid var(--tc-admin-line);
+}
+
+.admin-card-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--tc-brand-deep);
+}
+
+.admin-eyebrow {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tc-admin-muted);
+}
+
+.admin-page-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.admin-page-heading h1 {
+    margin: 0.25rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.admin-breadcrumb {
+    font-size: 0.78rem;
+}
+
+.admin-stat {
+    border-left: 3px solid var(--tc-brand);
+}
+
+.admin-stat .stat-value {
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.admin-stat .stat-delta {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--tc-brand);
+}
+
+.admin-mini-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    border-radius: 0.5rem;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.admin-toolbar .form-select,
+.admin-toolbar .form-control {
+    width: auto;
+    min-width: 150px;
+    font-size: 0.85rem;
+}
+
+.admin-table {
+    font-size: 0.85rem;
+}
+
+.admin-table thead th {
+    background: #f7faf9;
+    color: var(--tc-admin-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--tc-admin-line);
+}
+
+.admin-table td {
+    vertical-align: middle;
+}
+
+.admin-thumb {
+    width: 42px;
+    height: 42px;
+    border-radius: 0.45rem;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.admin-action {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.admin-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand-deep);
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.admin-status.warn {
+    background: #fff4e5;
+    color: #9a5b00;
+}
+
+.admin-status.muted {
+    background: #eef1f0;
+    color: #5e6b67;
+}
+
+.admin-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+    height: 170px;
+    padding-top: 1rem;
+}
+
+.admin-bar-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.admin-bar {
+    width: 100%;
+    max-width: 34px;
+    border-radius: 0.35rem 0.35rem 0 0;
+    background: var(--tc-brand-gradient);
+}
+
+.admin-bar-label {
+    font-size: 0.7rem;
+    color: var(--tc-admin-muted);
+}
+
+.admin-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: #e8eeeb;
+    overflow: hidden;
+}
+
+.admin-progress span {
+    display: block;
+    height: 100%;
+    background: var(--tc-brand-gradient);
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.15rem;
+}
+
+.admin-form-grid .full {
+    grid-column: 1 / -1;
+}
+
+.admin-section-note {
+    font-size: 0.78rem;
+    color: var(--tc-admin-muted);
+}
+
+.admin-save-bar {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1px solid var(--tc-admin-line);
+    border-radius: 0.7rem;
+    box-shadow: 0 -0.2rem 0.8rem rgba(15, 118, 110, 0.06);
+}
+
+.admin-switch-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+}
+
+.admin-switch-card + .admin-switch-card {
+    border-top: 1px solid var(--tc-admin-line);
+}
+
+.admin-gallery-tile {
+    height: 78px;
+    border: 1px dashed var(--tc-brand);
+    border-radius: 0.5rem;
+    background: var(--tc-brand-pale);
+    color: var(--tc-brand);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.admin-preview-card {
+    border: 1px solid var(--tc-admin-line);
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.admin-preview-head {
+    height: 110px;
+    background: var(--tc-brand-gradient);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+@media (max-width: 991.98px) {
+    .admin-sidebar {
+        position: static;
+        width: auto;
+        padding: 0.8rem;
+    }
+
+    .admin-brand {
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
+        border-bottom: 0;
+    }
+
+    .admin-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+
+    .admin-nav-heading {
+        display: none;
+    }
+
+    .admin-nav-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        margin: 0;
+    }
+
+    .admin-nav-bottom {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .admin-topbar {
+        position: static;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-toolbar .form-select,
+    .admin-toolbar .form-control {
+        width: 100%;
+    }
+
+    .admin-topbar-inner {
+        height: auto;
+        padding: 0.7rem 1rem;
+        flex-wrap: wrap;
+    }
+}
+
+/* ---- Database CRUD admin screens ---- */
+.admin-crud-filters .form-label {
+    margin-bottom: 0.25rem;
+}
+
+.admin-row-actions .btn {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.admin-pagination .page-link {
+    color: var(--tc-admin-text, #17312f);
+    border-color: var(--tc-admin-line, #dce7e5);
+}
+
+.admin-pagination .page-item.active .page-link {
+    background: var(--tc-brand, #0f766e);
+    border-color: var(--tc-brand, #0f766e);
+    color: #fff;
+}
+
+.modal .admin-form-grid {
+    gap: 0.85rem 1rem;
+}
+
+.modal .admin-form-grid > div {
+    min-width: 0;
+}
+
+@media (max-width: 575.98px) {
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ---- Enhanced admin View details modal ---- */
+.admin-view-header {
+    background: linear-gradient(135deg, var(--tc-brand-pale, #e6f4f1), #fff);
+    border-bottom: 1px solid var(--tc-admin-line, #dce7e5);
+    padding: 1.1rem 1.25rem;
+}
+
+.admin-view-icon {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.8rem;
+    background: var(--tc-brand-gradient, linear-gradient(135deg, #0f766e, #14b8a6));
+    color: #fff;
+    font-size: 1.15rem;
+    box-shadow: 0 0.35rem 0.9rem rgba(15, 118, 110, 0.2);
+}
+
+.admin-view-body {
+    background: #f8fafa;
+}
+
+.admin-view-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.admin-view-summary > div {
+    background: #fff;
+    border: 1px solid var(--tc-admin-line, #dce7e5);
+    border-radius: 0.7rem;
+    padding: 0.75rem 0.9rem;
+}
+
+.admin-view-summary span {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tc-admin-muted, #71817f);
+    margin-bottom: 0.35rem;
+}
+
+.admin-view-summary strong {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tc-admin-text, #17312f);
+}
+
+.admin-view-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.admin-view-field {
+    background: #fff;
+    border: 1px solid var(--tc-admin-line, #dce7e5);
+    border-radius: 0.7rem;
+    padding: 0.75rem 0.9rem;
+    min-width: 0;
+}
+
+.admin-view-field.full {
+    grid-column: 1 / -1;
+}
+
+.admin-view-label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tc-admin-muted, #71817f);
+    margin-bottom: 0.35rem;
+}
+
+.admin-view-value {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--tc-admin-text, #17312f);
+    word-break: break-word;
+}
+
+@media (max-width: 575.98px) {
+    .admin-view-summary,
+    .admin-view-fields {
+        grid-template-columns: 1fr;
+    }
+}
