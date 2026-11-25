@@ -71,6 +71,8 @@ CREATE TABLE users (
     phone VARCHAR(30) NULL DEFAULT NULL,
     password_hash VARCHAR(255) NOT NULL,
     profile_picture VARCHAR(255) NULL DEFAULT NULL COMMENT 'File name saved under uploads/profile_pictures/',
+    dob DATE NULL DEFAULT NULL,
+    gender VARCHAR(20) NULL DEFAULT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'customer' COMMENT 'customer, admin',
     status VARCHAR(20) NOT NULL DEFAULT 'inactive' COMMENT 'active, inactive, blocked',
     token VARCHAR(255) NULL DEFAULT NULL,
@@ -87,8 +89,10 @@ CREATE TABLE users (
 CREATE TABLE addresses (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id BIGINT UNSIGNED NOT NULL,
+    name VARCHAR(100) NULL DEFAULT NULL,
     label VARCHAR(30) NOT NULL COMMENT 'Home, Office, Other',
     line1 VARCHAR(180) NOT NULL,
+    line2 VARCHAR(180) NULL DEFAULT NULL,
     city VARCHAR(80) NOT NULL,
     state VARCHAR(80) NOT NULL,
     pin VARCHAR(10) NOT NULL,
@@ -332,6 +336,26 @@ CREATE TABLE page_sections (
     KEY idx_page_sections_order (display_order),
     CONSTRAINT fk_page_sections_page FOREIGN KEY (page_id) REFERENCES pages (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Repeatable content blocks such as About stats and Contact details';
+
+-- 17. Password Reset OTP management
+CREATE TABLE password_reset_otps (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(180) NOT NULL,
+    otp VARCHAR(10) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_expires (expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Active 2-minute OTPs for password recovery';
+
+-- 18. Password reset attempt logs for 24-hour rate limiting
+CREATE TABLE password_reset_attempts (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(180) NOT NULL,
+    ip_address VARCHAR(45) NULL DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email_time (email, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Tracks OTP generation attempts for 24-hour rate limiting';
 
 SET FOREIGN_KEY_CHECKS = 1;
 

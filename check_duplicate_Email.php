@@ -6,14 +6,14 @@
 
 require_once __DIR__ . '/db.php';
 
-if (isset($_GET['email1'])) {
-    $email = trim($_GET['email1']);
-    
-    $user = db_one("SELECT id FROM users WHERE email = ? LIMIT 1", [$email]);
+$email = trim($_REQUEST['email'] ?? ($_REQUEST['email1'] ?? ''));
+
+if ($email !== '') {
+    $user = db_one("SELECT id, status FROM users WHERE email = ? LIMIT 1", [$email]);
 
     if ($user) {
-        echo 'true';  // Email already registered
+        echo 'true';  // Email is registered
     } else {
-        echo 'false'; // Email is available
+        echo 'false'; // Email is not registered
     }
 }

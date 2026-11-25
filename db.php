@@ -6,6 +6,9 @@
 
 require_once __DIR__ . '/env.php';
 
+// Ensure consistent timezone between PHP and MySQL
+date_default_timezone_set(env('APP_TIMEZONE', 'Asia/Kolkata'));
+
 /** Escape output for HTML. */
 function h($value): string
 {

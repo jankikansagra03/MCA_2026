@@ -7,6 +7,30 @@
  * and then loads this file, so the header and footer are written only once.
  */
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/auth.php';
+
+$is_logged_in      = is_logged_in();
+$layout_user       = current_user();
+$current_user_name = $layout_user['fullname'] ?? ($_SESSION['user_name'] ?? 'Account');
+$nav_avatar        = user_avatar_url($layout_user);
+
+$cart_badge_count     = 0;
+$wishlist_badge_count = 0;
+if ($is_logged_in && !empty($layout_user['id'])) {
+    try {
+        require_once __DIR__ . '/db.php';
+        $cart_row = db_one("SELECT COUNT(*) AS total FROM carts WHERE user_id = ? AND status = 'active'", [$layout_user['id']]);
+        $cart_badge_count = (int)($cart_row['total'] ?? 0);
+
+        $wish_row = db_one("SELECT COUNT(*) AS total FROM wishlists WHERE user_id = ? AND status = 'active'", [$layout_user['id']]);
+        $wishlist_badge_count = (int)($wish_row['total'] ?? 0);
+    } catch (Throwable $e) {}
+}
+
 // Defaults, used if a page forgets to set these variables.
 // "??" means: use the left value if it exists, otherwise use the right one.
 $page_title   = $page_title   ?? 'TrendCart - Shop Smart, Save More';
@@ -117,51 +141,75 @@ $account_pages = ['account', 'orders', 'order-detail', 'profile', 'edit-profile'
                     </form>
 
                     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
-                        <li class="nav-item">
-                            <a class="nav-link <?= $active_page === 'wishlist' ? 'active' : '' ?>" href="wishlist.php" title="Wishlist">
-                                <i class="fa-regular fa-heart"></i>
-                                <span class="badge rounded-pill bg-danger">3</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= $active_page === 'cart' ? 'active' : '' ?>" href="cart.php" title="Shopping cart">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="badge rounded-pill bg-primary">2</span>
-                            </a>
-                        </li>
+                        <?php if ($is_logged_in): ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?= $active_page === 'wishlist' ? 'active' : '' ?>" href="wishlist.php" title="Wishlist">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <?php if ($wishlist_badge_count > 0): ?>
+                                        <span class="badge rounded-pill bg-danger"><?= $wishlist_badge_count ?></span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?= $active_page === 'cart' ? 'active' : '' ?>" href="cart.php" title="Shopping cart">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    <?php if ($cart_badge_count > 0): ?>
+                                        <span class="badge rounded-pill bg-primary"><?= $cart_badge_count ?></span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-item dropdown ms-lg-2">
-                            <a class="nav-link dropdown-toggle <?= in_array($active_page, $account_pages, true) ? 'active' : '' ?>"
+                            <a class="nav-link dropdown-toggle d-flex align-items-center <?= in_array($active_page, $account_pages, true) ? 'active' : '' ?>"
                                href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                <i class="fa-regular fa-user me-1"></i>Account
+                                <?php if ($is_logged_in && !empty($nav_avatar)): ?>
+                                    <img src="<?= $nav_avatar ?>" alt="Avatar" class="rounded-circle object-fit-cover me-1" style="width: 22px; height: 22px;">
+                                <?php else: ?>
+                                    <i class="fa-regular fa-user me-1"></i>
+                                <?php endif; ?>
+                                <?= $is_logged_in ? htmlspecialchars($current_user_name) : 'Account' ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                                <li><a class="dropdown-item <?= $active_page === 'account' ? 'active' : '' ?>" href="account.php">
-                                    <i class="fa-solid fa-gauge-high me-2"></i>My Account
-                                </a></li>
-                                <li><a class="dropdown-item <?= $active_page === 'orders' ? 'active' : '' ?>" href="orders.php">
-                                    <i class="fa-solid fa-box-archive me-2"></i>My Orders
-                                </a></li>
-                                <li><a class="dropdown-item <?= $active_page === 'wishlist' ? 'active' : '' ?>" href="wishlist.php">
-                                    <i class="fa-regular fa-heart me-2"></i>Wishlist
-                                </a></li>
-                                <li><a class="dropdown-item <?= $active_page === 'cart' ? 'active' : '' ?>" href="cart.php">
-                                    <i class="fa-solid fa-cart-shopping me-2"></i>Shopping Cart
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item <?= $active_page === 'addresses' ? 'active' : '' ?>" href="addresses.php">
-                                    <i class="fa-solid fa-location-dot me-2"></i>Address Book
-                                </a></li>
-                                <li><a class="dropdown-item <?= in_array($active_page, ['profile', 'edit-profile', 'change-password'], true) ? 'active' : '' ?>" href="profile.php">
-                                    <i class="fa-solid fa-user me-2"></i>Profile &amp; Settings
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item <?= $active_page === 'login' ? 'active' : '' ?>" href="login.php">
-                                    <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
-                                </a></li>
-                                <li><a class="dropdown-item <?= $active_page === 'register' ? 'active' : '' ?>" href="register.php">
-                                    <i class="fa-solid fa-user-plus me-2"></i>Create Account
-                                </a></li>
+                                <?php if ($is_logged_in): ?>
+                                    <li><a class="dropdown-item <?= $active_page === 'account' ? 'active' : '' ?>" href="account.php">
+                                        <i class="fa-solid fa-gauge-high me-2"></i>My Account
+                                    </a></li>
+                                    <li><a class="dropdown-item <?= $active_page === 'orders' ? 'active' : '' ?>" href="orders.php">
+                                        <i class="fa-solid fa-box-archive me-2"></i>My Orders
+                                    </a></li>
+                                    <li><a class="dropdown-item <?= $active_page === 'wishlist' ? 'active' : '' ?>" href="wishlist.php">
+                                        <i class="fa-regular fa-heart me-2"></i>Wishlist
+                                    </a></li>
+                                    <li><a class="dropdown-item <?= $active_page === 'cart' ? 'active' : '' ?>" href="cart.php">
+                                        <i class="fa-solid fa-cart-shopping me-2"></i>Shopping Cart
+                                    </a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item <?= $active_page === 'addresses' ? 'active' : '' ?>" href="addresses.php">
+                                        <i class="fa-solid fa-location-dot me-2"></i>Address Book
+                                    </a></li>
+                                    <li><a class="dropdown-item <?= in_array($active_page, ['profile', 'edit-profile', 'change-password'], true) ? 'active' : '' ?>" href="profile.php">
+                                        <i class="fa-solid fa-user me-2"></i>Profile &amp; Settings
+                                    </a></li>
+                                    <?php if (isset($_SESSION['user_role']) && strtolower($_SESSION['user_role']) === 'admin'): ?>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger" href="admin/admin.php">
+                                            <i class="fa-solid fa-shield-halved me-2"></i>Admin Panel
+                                        </a></li>
+                                    <?php endif; ?>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="logout.php">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out
+                                    </a></li>
+                                <?php else: ?>
+                                    <li><a class="dropdown-item <?= $active_page === 'login' ? 'active' : '' ?>" href="login.php">
+                                        <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+                                    </a></li>
+                                    <li><a class="dropdown-item <?= $active_page === 'register' ? 'active' : '' ?>" href="register.php">
+                                        <i class="fa-solid fa-user-plus me-2"></i>Create Account
+                                    </a></li>
+                                <?php endif; ?>
                             </ul>
                         </li>
                     </ul>

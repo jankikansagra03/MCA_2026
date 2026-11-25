@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . '/check_guest.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/mailer.php';
 
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([
             $fullname,
             $email,
-            $phone !== '' ? $phone : null,
+            $phone,
             $password_hash,
             $token
         ]);
@@ -122,17 +123,17 @@ ob_start();
                     </div>
 
                     <?php if (!empty($success_message)): ?>
-                        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                            <i class="fa-solid fa-circle-check me-2"></i><?= $success_message ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i><?= $success_message ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <?php endif; ?>
 
                     <?php if (!empty($error_message)): ?>
-                        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                            <i class="fa-solid fa-circle-exclamation me-2"></i><?= h($error_message) ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i><?= h($error_message) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <?php endif; ?>
 
                     <!-- Full name, contact details, then passwords. -->
@@ -144,7 +145,6 @@ ob_start();
                                     <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                                     <input type="text" class="form-control" id="fullname" name="fullname"
                                         placeholder="Your full name" autocomplete="name"
-                                        value="<?= h($fullname) ?>"
                                         data-validation="required min max" data-min="2" data-max="50">
                                 </div>
                                 <div class="invalid-feedback" id="fullnameError"></div>
@@ -156,7 +156,6 @@ ob_start();
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                                     <input type="email" class="form-control" id="email" name="email"
                                         placeholder="you@example.com" autocomplete="email"
-                                        value="<?= h($email) ?>"
                                         data-validation="required email" onblur="setupEmailCheck()">
                                 </div>
                                 <div class="invalid-feedback" id="emailError"></div>
@@ -167,9 +166,7 @@ ob_start();
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
                                     <input type="tel" class="form-control" id="phone" name="phone"
-                                        placeholder="+91 98765 43210" autocomplete="tel"
-                                        value="<?= h($phone) ?>"
-                                        data-validation="required max"
+                                        placeholder="+91 98765 43210" autocomplete="tel" data-validation="required max"
                                         data-max="15">
                                 </div>
                                 <div class="invalid-feedback" id="phoneError"></div>
@@ -251,33 +248,30 @@ ob_start();
 </div>
 
 <script>
-    $(document).ready(function() {
-        function setupEmailCheck() {
+function setupEmailCheck() {
+    var email = $('#email').val().trim();
+    if (email === '') return;
 
-            var email = $('#email').val().trim();
-            if (email === '') return;
-
-            $.ajax({
-                type: 'GET',
-                url: 'check_duplicate_Email.php',
-                data: {
-                    email1: email
-                },
-                success: function(response) {
-                    if (response.trim() === 'true') {
-                        $('#emailError').text('Email already registered.').show();
-                        $('#email').addClass('is-invalid').removeClass('is-valid');
-                        $('#emailError').addClass('text-danger').removeClass('text-success');
-                    } else {
-                        $('#emailError').text('This email is available.').show();
-                        $('#email').removeClass('is-invalid').addClass('is-valid');
-                        $('#emailError').addClass('text-success').removeClass('text-danger');
-                    }
-                }
-            });
+    $.ajax({
+        type: 'GET',
+        url: 'check_duplicate_Email.php',
+        data: {
+            email1: email
+        },
+        success: function(response) {
+            if (response.trim() === 'true') {
+                $('#emailError').text('Email already registered.').show();
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+                $('#emailError').addClass('text-danger').removeClass('text-success');
+            } else {
+                $('#emailError').text('This email is available.').show();
+                $('#email').removeClass('is-invalid').addClass('is-valid');
+                $('#emailError').addClass('text-success').removeClass('text-danger');
+            }
         }
-
     });
+}
+window.setupEmailCheck = setupEmailCheck;
 </script>
 
 <?php

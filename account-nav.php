@@ -2,11 +2,14 @@
 /**
  * account-nav.php
  * ---------------
- * Shared sidebar for every account page. A page only has to set
- * $account_active before requiring this file, and the matching link lights up.
+ * Shared sidebar for every account page with dynamic user details and avatar.
  */
 
+require_once __DIR__ . '/auth.php';
+
 $account_active = $account_active ?? '';
+$sidebar_user   = current_user();
+$sidebar_avatar = user_avatar_url($sidebar_user);
 
 // Two small groups keep the menu easy to scan.
 $account_groups = [
@@ -27,12 +30,16 @@ $account_groups = [
 <div class="card store-card account-sidebar mb-4 mb-lg-0">
     <div class="card-body p-3">
         <div class="d-flex align-items-center gap-3 px-2 py-2 mb-3 border-bottom">
-            <div class="avatar-sm bg-primary text-white d-flex align-items-center justify-content-center">
-                <i class="fa-regular fa-user"></i>
-            </div>
-            <div>
-                <p class="small fw-bold mb-0">Aarav Mehta</p>
-                <p class="hint text-muted mb-0">TrendCart Member</p>
+            <?php if ($sidebar_avatar): ?>
+                <img src="<?= $sidebar_avatar ?>" alt="Avatar" class="avatar-sm rounded-circle object-fit-cover border" style="width: 42px; height: 42px;">
+            <?php else: ?>
+                <div class="avatar-sm bg-primary text-white d-flex align-items-center justify-content-center rounded-circle" style="width: 42px; height: 42px;">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+            <?php endif; ?>
+            <div class="overflow-hidden">
+                <p class="small fw-bold mb-0 text-truncate"><?= htmlspecialchars($sidebar_user['fullname'] ?? 'TrendCart Member') ?></p>
+                <p class="hint text-muted mb-0 text-truncate"><?= htmlspecialchars($sidebar_user['email'] ?? 'Member') ?></p>
             </div>
         </div>
 
@@ -50,7 +57,7 @@ $account_groups = [
         <?php endforeach; ?>
 
         <div class="nav flex-column account-nav">
-            <a class="nav-link" href="login.php">
+            <a class="nav-link text-danger" href="logout.php">
                 <i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out
             </a>
         </div>

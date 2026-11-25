@@ -37,8 +37,20 @@
       return siblingErr.first();
     }
 
+    let inputGroup = field.closest(".input-group");
+    if (inputGroup.length > 0) {
+      let groupErr = inputGroup.siblings(".error-message, .invalid-feedback");
+      if (groupErr.length > 0) {
+        return groupErr.first();
+      }
+      groupErr = inputGroup.parent().find(".error-message, .invalid-feedback");
+      if (groupErr.length > 0) {
+        return groupErr.first();
+      }
+    }
+
     let parentErr = field
-      .closest(".field, .form-group, .mb-3, div")
+      .closest(".field, .form-group, .mb-3, .col-12, .col-md-6, .col-sm-6, .col-md-4, .col-md-5, .col-md-3, form")
       .find(".error-message, .invalid-feedback");
     if (parentErr.length > 0) {
       return parentErr.first();

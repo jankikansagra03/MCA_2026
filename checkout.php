@@ -4,6 +4,8 @@
  * Delivery address, payment choice and an order summary. Nothing is processed.
  */
 
+require_once __DIR__ . '/check_auth.php';
+
 // STEP 1: Settings used by the shared layout.
 $page_title     = 'Checkout | TrendCart';
 $active_page    = 'checkout';
